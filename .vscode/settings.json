@@ -1,0 +1,9 @@
+{
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.tabSize": 4,
+  "[yaml]": { "editor.tabSize": 2 },
+  "[toml]": { "editor.tabSize": 2 },
+  "python.analysis.typeCheckingMode": "off"
+}

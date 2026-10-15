@@ -1,0 +1,17 @@
+# 推論ノード（デプロイ）の設定（講義資料 第5回 p.50）
+
+model_path: "/home/ubuntu/checkpoints/train/crane_plus_spin_act"
+rate_hz: 20                 # 推論・指令の周期。target_freq と揃える
+time_from_start_sec: 0.1    # 各指令を「何秒かけて到達するか」
+
+topics:
+  joint_states: "/joint_states"
+  arm_command: "/crane_plus_arm_controller/joint_trajectory"
+  gripper_command: "/crane_plus_gripper_controller/joint_trajectory"
+
+arm_joint_names:
+  - "crane_plus_joint1"
+  - "crane_plus_joint2"
+  - "crane_plus_joint3"
+  - "crane_plus_joint4"
+gripper_joint_name: "crane_plus_joint_hand"

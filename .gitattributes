@@ -1,0 +1,13 @@
+# Windowsで編集しても、Linux(Dockerコンテナ)で動かすファイルは改行を LF に統一する。
+# （CRLFのままだと "bad interpreter" などのエラーでシェルスクリプトが動かない）
+* text=auto
+*.sh   text eol=lf
+*.py   text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+*.toml text eol=lf
+*.md   text eol=lf
+*.ps1  text eol=crlf
+
+# pixi.lock は自動生成ファイル
+pixi.lock merge=binary linguist-language=YAML linguist-generated=true

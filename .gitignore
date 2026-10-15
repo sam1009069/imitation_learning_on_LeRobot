@@ -1,0 +1,43 @@
+# ===== pixi（環境本体は巨大なのでGitに入れない。pixi.lock は入れる） =====
+.pixi/
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ===== ロボットデータ・学習結果（サイズが大きい。GitHubは1ファイル100MBまで） =====
+*.db3
+*.mcap
+rosbags/
+dataset/
+lerobot_dataset/
+checkpoints/
+outputs/
+*.pt
+*.pth
+*.safetensors
+*.ckpt
+*.mp4
+*.rrd
+
+# ===== wandb =====
+wandb/
+
+# ===== 秘密情報（APIキーなど。絶対にGitHubに上げない） =====
+.env
+.env.*
+*.key
+
+# ===== OS・エディタ =====
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# ===== バックアップ置き場（README の「データのバックアップ」参照）=====
+backup/

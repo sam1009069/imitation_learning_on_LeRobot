@@ -1,0 +1,49 @@
+# =============================================================================
+# pixi.toml : LeRobot を使った模倣学習の環境構築
+# 講義資料 第5回 p.31「1. LeRobotの環境構築」に対応
+#
+# 使い方（Dockerコンテナ内で実行）:
+#   pixi install          # 依存パッケージを全部インストール
+#   pixi task list        # 使えるタスク一覧
+#   pixi run convert      # rosbag -> LeRobotDataset 変換
+#   pixi run train        # ACT 学習
+#   pixi run infer --model-path <学習済みモデルのパス>
+# =============================================================================
+
+[workspace]
+name = "imitation_learning_on_lerobot"
+version = "0.1.0"
+channels = ["conda-forge"]
+# 演習環境のDockerコンテナ（Ubuntu）で動かすための指定
+platforms = ["linux-64", "linux-aarch64"]
+
+[system-requirements]
+libc = { family = "glibc", version = "2.31" }
+
+# ---- conda-forge から入れるもの ----
+[dependencies]
+python = "3.10.*"       # ROS 2 Humble (Ubuntu 22.04) の Python と同じ 3.10
+ffmpeg = "6.1.1.*"      # LeRobotがカメラ画像をmp4に圧縮する時に使う
+rosbags = ">=0.10.10,<0.11"  # ROSなしでrosbag2(.db3)を読めるライブラリ
+matplotlib = ">=3.10.3,<4"
+pyyaml = "*"
+numpy = "*"
+
+# ---- PyPI / GitHub から入れるもの ----
+[pypi-dependencies]
+# 講義の pai_training が使っている LeRobot と同じコミットに固定（APIが変わると動かなくなるため）
+lerobot = { git = "https://github.com/huggingface/lerobot.git", rev = "768e36660d1408c71118a2760f831c037fbfa17d" }
+draccus = "==0.10.0"
+
+[activation.env]
+LD_LIBRARY_PATH = "$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+PYTHONNOUSERSITE = "1"
+
+# ---- pixi run <名前> で呼べるタスク ----
+[tasks]
+convert = { cmd = "python scripts/rosbag2lerobot.py" }         # 講義 p.43
+train = { cmd = "python scripts/train.py" }                    # 講義 p.45
+infer = { cmd = "python scripts/infer.py" }                    # 講義 p.50
+debug-policy = { cmd = "python scripts/debug_policy.py" }      # 講義 p.52
+plot-episode = { cmd = "python scripts/plot_episode.py" }      # 講義 p.44 (可視化)
+test = { cmd = "python tests/test_resample.py" }

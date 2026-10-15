@@ -1,0 +1,32 @@
+# rosbag2 -> LeRobotDataset 変換の設定（講義資料 第5回 p.43 の conversion_config.yaml に対応）
+
+# 入力: 1エピソード = 1 bag のフォルダ（ep0, ep1, ...）が入っている親ディレクトリ
+bag_dir: "/home/ubuntu/dataset/rosbags/spin"
+
+# 出力: LeRobotDataset の保存先（configs/crane_features.py の root と揃える）
+output_dir: "/home/ubuntu/dataset/lerobot_dataset/crane_plus_spin"
+
+# 特徴量・repo_id・task_name を定義した Python ファイル
+config: "configs/crane_features.py"
+
+# ターゲット周波数 [Hz]。非同期のトピックを、この周期で「直前値保持」リサンプリングする（講義 p.48）
+target_freq: 20
+
+# 短いエピソードを最長エピソードに揃えて最終フレームで埋めるか（講義の元スクリプトの挙動 / p.41 の注記）
+#   true : 全エピソードが同じ長さになる（講義と同じ）
+#   false: エピソードごとの長さをそのまま使う
+pad_to_longest: true
+
+# 読み込むトピック名（CRANE+ V2。講義 p.26, p.47）
+topics:
+  joint_states: "/joint_states"
+  arm_command: "/crane_plus_arm_controller/joint_trajectory"
+  gripper_command: "/crane_plus_gripper_controller/joint_trajectory"
+
+# ROS上の関節名 -> 並び順（configs/crane_features.py の JOINT_NAMES と同じ順）
+arm_joint_names:
+  - "crane_plus_joint1"
+  - "crane_plus_joint2"
+  - "crane_plus_joint3"
+  - "crane_plus_joint4"
+gripper_joint_name: "crane_plus_joint_hand"
